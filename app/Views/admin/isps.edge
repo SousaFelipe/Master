@@ -1,0 +1,217 @@
+@layout('layouts/admin')
+@set('title', 'Home')
+
+
+
+@section('main-container')
+
+    <div class="frame-top">
+        <span class="text-secondary fs-xl fw-7 ff-poppins">Provedores</span>
+        <button type="button" class="btn bg-blue-one" onclick="openNewProvedorModal()">
+            <i class="material-icons fs-16 me-1">add</i> Novo
+        </button>
+    </div>
+
+    <div class="main-content">
+        <div class="card">
+            <div class="card-body ms-4 mt-3 me-4 mb-4">
+                <table id="provedores">
+                    <thead>
+                        <tr>
+                            <th>CNPJ</th>
+                            <th>RAZÃO</th>
+                            <th>ENDEREÇO</th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-hidden">
+
+        <div class="content-hidden-header">
+            <button type="button" class="btn widget bg-light">
+                <i class="material-icons-outlined">arrow_back</i>
+            </button>
+            <div class="flex-row">
+                <button type="button" class="btn widget bg-light me-1" data-isp-edit="0">
+                    <i class="material-icons md-18">edit</i>
+                </button>
+                <button type="button" class="btn widget bg-light" data-isp-edit="0">
+                    <i class="material-icons md-18">lock</i>
+                </button>
+                <button type="button" class="btn widget bg-light ms-1" data-isp-edit="0">
+                    <i class="material-icons md-18">delete</i>
+                </button>
+            </div>
+        </div>
+
+        <div class="content-hidden-content flex-col mt-5">
+
+            <div class="row mt-3">
+                <div class="col-3">
+                    <input type="text" id="edit-cnpj" name="cnpj" class="form-control edit-provedor" placeholder="CNPJ" data-filter="mask|empty" disabled>
+                </div>
+                <div class="col-5">
+                    <input type="text" id="edit-razao" name="razao" class="form-control edit-provedor" placeholder="Razão Social" data-filter="empty" disabled>
+                </div>
+                <div class="col-4">
+                    <input type="text" id="edit-nome_fantasia" name="nome_fantasia" class="form-control edit-provedor" placeholder="Fantasia" data-filter="empty" disabled>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <select name="porte" class="form-control edit-provedor select" data-filter="empty" disabled>
+                        <option value="">Porte</option>
+                        <option value="Individual">Individual</option>
+                        <option value="Microempresa">Microempresa</option>
+                        <option value="Pequeno Porte">Pequeno Porte</option>
+                        <option value="Médio Porte">Médio Porte</option>
+                        <option value="Grande Porte">Grande Porte</option>
+                    </select>
+                </div>
+                <div class="col-5">
+                    <input type="text" id="edit-email" name="email" class="form-control edit-provedor" placeholder="E-mail" data-filter="empty" disabled>
+                </div>
+                <div class="col-3">
+                    <input type="text" id="edit-empresa_telefone" name="empresa_telefone" class="form-control edit-provedor" placeholder="Telefone da empresa" data-filter="mask|empty" disabled>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-5">
+                    <input type="text" id="edit-titular" name="titular" class="form-control edit-provedor" placeholder="Nome do responsável" data-filter="empty" disabled>
+                </div>
+                <div class="col-4">
+                    <select name="class_responsavel" class="form-control edit-provedor select" data-filter="empty" disabled>
+                        <option value="">Classificação</option>
+                        <option value="Individual">Titular</option>
+                        <option value="Pequeno Porte">Sócio-administrador</option>
+                        <option value="Médio Porte">Sócio-quotista</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <input type="text" id="edit-titular_contato" name="titular_contato" class="form-control edit-provedor" placeholder="Contato do responsável" data-filter="mask|empty" disabled>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-5">
+                    <input type="text" id="edit-logradouro" name="logradouro" class="form-control edit-provedor" placeholder="Ex: Bairro, rua e número" data-filter="empty" disabled>
+                </div>
+                <div class="col-3">
+                    <input type="text" id="edit-municipio" name="municipio" class="form-control edit-provedor" placeholder="Município" data-filter="empty" disabled>
+                </div>
+                <div class="col-2">
+                    <input type="text" id="edit-cep" name="cep" class="form-control edit-provedor" placeholder="CEP" data-filter="mask|empty" disabled>
+                </div>
+                <div class="col-2">
+                    <select name="uf" class="form-control edit-provedor select" data-filter="empty" disabled>
+                        <option value="">UF</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-3">
+                    <input type="text" id="edit-server_url" name="server_url" class="form-control edit-provedor" placeholder="Domínio" data-filter="empty" disabled>
+                </div>
+                <div class="col-3">
+                    <input type="text" id="edit-server_ip" name="server_ip" class="form-control edit-provedor" placeholder="IP" data-filter="empty|max:15" disabled>
+                </div>
+                <div class="col-6">
+                    <div class="flex-row">
+                        <input type="text" id="edit-token" name="token" class="form-control edit-provedor" placeholder="Token" data-filter="empty|min:62|max:62" disabled>
+                        <button type="button" class="btn md bg-blue-two ms-1" onclick="requestNewToken()">
+                            <i class="material-icons fs-16">refresh</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="flex-col mt-5">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="flex-row justify-between align-center w-100">
+                        <span class="text-tertiary fs-ml fw-6">Tokens</span>
+                        <button type="button" class="btn btn-sm bg-blue-one" onclick="openTokenModal()">
+                            <i class="material-icons fs-16 me-1">add</i> Novo
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body mb-4">
+                    <table id="tokens">
+                        <thead class="bg-tertiary">
+                            <tr>
+                                <th>PLANO</th>
+                                <th>VALIDADE</th>
+                                <th>VENCIMENTOS</th>
+                                <th>VALOR</th>
+                                <th>AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+@end
+
+
+
+@section('modal-area')
+
+    @include('admin/modals/new_isp')
+
+    @include('admin/modals/new_token')
+
+@endsection
+
+
+
+@section('layout-scripts')
+    <script src="/js/http/Request.js"></script>
+    <script src="/js/tools/filter.js"></script>
+    <script src="/js/app/layouts/admin.js"></script>
+    <script src="/js/app/components/Alert.js"></script>
+    <script src="/js/app/components/Modal.js"></script>
+    <script src="/js/app/pages/provedores.js"></script>
+@endsection

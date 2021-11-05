@@ -1,0 +1,136 @@
+<div id="new-provedor-modal" class="modal-content">
+    <div class="modal modal-lg">
+
+        <header class="modal-header">
+            <h3 class="modal-title">Novo Provedor</h3>
+            <button type="button" data-modal-close="new-provedor-modal">
+                <i class="material-icons">close</i>
+            </button>
+        </header>
+
+        <div class="modal-body">
+
+            <span class="text-tertiary">Dados da empresa</span>
+
+            <div class="row mt-3">
+                <div class="col-3">
+                    <input type="text" name="cnpj" class="form-control input-provedor mask_cnpj" placeholder="CNPJ" data-filter="mask|empty">
+                </div>
+                <div class="col-5">
+                    <input type="text" name="razao" class="form-control input-provedor" placeholder="Razão Social" data-filter="empty">
+                </div>
+                <div class="col-4">
+                    <input type="text" name="nome_fantasia" class="form-control input-provedor" placeholder="Fantasia" data-filter="empty">
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-4">
+                    <select name="porte" class="form-control input-provedor select" data-filter="empty">
+                        <option value="">Porte</option>
+                        <option value="Individual">Individual</option>
+                        <option value="Microempresa">Microempresa</option>
+                        <option value="Pequeno Porte">Pequeno Porte</option>
+                        <option value="Médio Porte">Médio Porte</option>
+                        <option value="Grande Porte">Grande Porte</option>
+                    </select>
+                </div>
+                <div class="col-5">
+                    <input type="text" name="email" class="form-control input-provedor" placeholder="E-mail" data-filter="empty">
+                </div>
+                <div class="col-3">
+                    <input type="text" name="empresa_telefone" class="form-control input-provedor mask_telefone" placeholder="Telefone da empresa" data-filter="mask|empty">
+                </div>
+            </div>
+
+            <div class="row mt-3 mb-4">
+                <div class="col-5">
+                    <input type="text" name="titular" class="form-control input-provedor" placeholder="Nome do responsável" data-filter="empty">
+                </div>
+                <div class="col-4">
+                    <select name="class_responsavel" class="form-control input-provedor select" data-filter="empty">
+                        <option value="">Classificação</option>
+                        <option value="Individual">Titular</option>
+                        <option value="Pequeno Porte">Sócio-administrador</option>
+                        <option value="Médio Porte">Sócio-quotista</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <input type="text" name="titular_contato" class="form-control input-provedor mask_telefone" placeholder="Contato do responsável" data-filter="mask|empty">
+                </div>
+            </div>
+
+            <span class="text-tertiary">Endereço</span>
+
+            <div class="row mt-3 mb-4">
+                <div class="col-5">
+                    <input type="text" name="logradouro" class="form-control input-provedor" placeholder="Ex: Bairro, rua e número" data-filter="empty">
+                </div>
+                <div class="col-3">
+                    <input type="text" name="municipio" class="form-control input-provedor" placeholder="Município" data-filter="empty">
+                </div>
+                <div class="col-2">
+                    <input type="text" name="cep" class="form-control input-provedor mask_cep" placeholder="CEP" data-filter="mask|empty">
+                </div>
+                <div class="col-2">
+                    <select name="uf" class="form-control input-provedor select" data-filter="empty">
+                        <option value="">UF</option>
+                        <option value="AC">Acre</option>
+                        <option value="AL">Alagoas</option>
+                        <option value="AP">Amapá</option>
+                        <option value="AM">Amazonas</option>
+                        <option value="BA">Bahia</option>
+                        <option value="CE">Ceará</option>
+                        <option value="DF">Distrito Federal</option>
+                        <option value="ES">Espírito Santo</option>
+                        <option value="GO">Goiás</option>
+                        <option value="MA">Maranhão</option>
+                        <option value="MT">Mato Grosso</option>
+                        <option value="MS">Mato Grosso do Sul</option>
+                        <option value="MG">Minas Gerais</option>
+                        <option value="PA">Pará</option>
+                        <option value="PB">Paraíba</option>
+                        <option value="PR">Paraná</option>
+                        <option value="PE">Pernambuco</option>
+                        <option value="PI">Piauí</option>
+                        <option value="RJ">Rio de Janeiro</option>
+                        <option value="RN">Rio Grande do Norte</option>
+                        <option value="RS">Rio Grande do Sul</option>
+                        <option value="RO">Rondônia</option>
+                        <option value="RR">Roraima</option>
+                        <option value="SC">Santa Catarina</option>
+                        <option value="SP">São Paulo</option>
+                        <option value="SE">Sergipe</option>
+                        <option value="TO">Tocantins</option>
+                    </select>
+                </div>
+            </div>
+
+            <span class="text-tertiary">Dados técnicos</span>
+
+            <div class="row mt-3">
+                <div class="col-3">
+                    <input type="text" name="server_url" class="form-control input-provedor" placeholder="Domínio" data-filter="empty">
+                </div>
+                <div class="col-3">
+                    <input type="text" name="server_ip" class="form-control input-provedor mask_ip" placeholder="IP" data-filter="empty|max:15">
+                </div>
+                <div class="col-6">
+                    <div class="flex-row">
+                        <input type="text" name="token" class="form-control input-provedor" placeholder="Token" data-filter="empty|min:62|max:62" disabled>
+                        <button type="button" class="btn md bg-blue-two ms-1" onclick="requestNewToken()">
+                            <i class="material-icons fs-16">refresh</i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="modal-footer">
+            <button type="button" class="btn md bg-default" data-modal-close="new-provedor-modal">Cancelar</button>
+            <button type="button" class="btn md bg-blue-one ms-1" onclick="sendNewProvedor()">Salvar</button>
+        </footer>
+
+    </div>
+</div>
