@@ -1,12 +1,18 @@
-
 import { DateTime } from 'luxon'
 
-import Encryption from '@ioc:Adonis/Core/Encryption'
-import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
+import Hash  from '@ioc:Adonis/Core/Hash'
+
+import {
+    BaseModel,
+    beforeSave,
+    column
+} from '@ioc:Adonis/Lucid/Orm'
 
 
 
 export default class User extends BaseModel {
+
+
 
     @column({ isPrimary: true })
     public id: number
@@ -14,10 +20,7 @@ export default class User extends BaseModel {
     @column()
     public name: string
 
-    @column({
-        prepare: (value: string) => Encryption.encrypt(value),
-        consume: (value: string) => Encryption.decrypt(value),
-    })
+    @column()
     public email: string
 
     @column({ serializeAs: null })
@@ -28,4 +31,13 @@ export default class User extends BaseModel {
 
     @column.dateTime({ autoCreate: true, autoUpdate: true })
     public updatedAt: DateTime
+
+
+
+    @beforeSave()
+    public static async hashPassword (user: User) {
+        if (user.$dirty.password) {
+            user.password = await Hash.make(user.password)
+        }
+    }
 }

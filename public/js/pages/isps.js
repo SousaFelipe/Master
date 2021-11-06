@@ -45,7 +45,7 @@ if ( ! $.fn.DataTable.isDataTable('#tokens')) {
 
 
 $(function () {
-    
+
     $('.mask_cnpj').mask('00.000.000/0000-00', { reverse: true })
     $('.mask_telefone').mask('(00) 0 0000-0000', { reverse: false })
     $('.mask_cep').mask('00000-000', { reverse: false })
@@ -57,10 +57,13 @@ $(function () {
 
 
 function requestProvedores () {
-    new Request('/api/provedores/listar')
+    new Request('/isps/list')
         .get(async response => {
-            const provedores = await response.data.provedores
-            provedores.forEach(provedor => {
+            const isps = await response.isps
+
+            console.log(isps)
+
+            isps.forEach(provedor => {
                 drawProvedor(provedor)
             })
         })
@@ -71,7 +74,7 @@ function requestProvedores () {
 function drawProvedor (provedor) {
 
     ispsTable.row.add([
-        window.APP.mask(provedor.cnpj).cnpj(),
+        text(provedor.cnpj).cnpj(),
         provedor.nome_fantasia,
         `${ provedor.logradouro }, ${ provedor.municipio }-${ provedor.uf }`,
         `<button type="button"
@@ -94,7 +97,7 @@ function openNewProvedorModal () {
 
 
 function sendNewProvedor () {
-    
+
     const data = filter(`class*="input-provedor"`, (invalid) => {
             invalid.addClass('is-invalid')
             invalid.keyup(function (e) {

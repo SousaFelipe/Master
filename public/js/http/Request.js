@@ -33,7 +33,7 @@ class Request {
 
 
     redirect (assign = false) {
-        
+
         if (assign) {
             history.pushState(null, null, document.URL)
             window.addEventListener('popstate', function () {

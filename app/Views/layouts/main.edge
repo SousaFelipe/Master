@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+    <head>
+        @include('partials/head')
+        @!section('styles')
+    </head>
+
+    <body>
+
+        <div id="content" class="flex-col align-center w-100 h-100">
+
+            @!section('alerts')
+
+            @!section('content')
+
+        </div>
+
+        @include('partials/scripts')
+
+        @!section('layout-scripts')
+
+    </body>
+</html>

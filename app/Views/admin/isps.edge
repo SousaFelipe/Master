@@ -1,5 +1,25 @@
 @layout('layouts/admin')
-@set('title', 'Home')
+@set('title', 'Provedores')
+
+
+
+@section('styles')
+    <link href="/css/layouts/admin.css" rel="stylesheet">
+    <link href="/css/pages/isps.css" rel="stylesheet">
+@end
+
+
+
+@section('alerts')
+    <div class="alert-container" data-alert-container-to="new-provedor-alert">
+        <div id="new-provedor-alert" class="alert danger" role="alert">
+            <div id="new-provedor-alertBody" class="alert-body text-white"></div>
+            <button class="btn-close-widget" data-alert-close="new-provedor-alert">
+                <i class="material-icons-two-tone">close</i>
+            </button>
+        </div>
+    </div>
+@end
 
 
 
@@ -203,15 +223,15 @@
 
     @include('admin/modals/new_token')
 
-@endsection
+@end
 
 
 
 @section('layout-scripts')
     <script src="/js/http/Request.js"></script>
     <script src="/js/tools/filter.js"></script>
-    <script src="/js/app/layouts/admin.js"></script>
-    <script src="/js/app/components/Alert.js"></script>
-    <script src="/js/app/components/Modal.js"></script>
-    <script src="/js/app/pages/provedores.js"></script>
-@endsection
+    <script src="/js/layouts/admin.js"></script>
+    <script src="/js/components/Alert.js"></script>
+    <script src="/js/components/Modal.js"></script>
+    <script src="/js/pages/isps.js"></script>
+@end

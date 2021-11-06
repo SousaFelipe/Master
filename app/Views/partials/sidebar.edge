@@ -4,7 +4,7 @@
         <img src="/assets/images/brand/neptune.png" alt="Light Spark" width="40" height="40">
         <span class="user-info">
             <div class="user-text">
-                <span class="text-secondary fs-sm fw-6 ff-poppins"> <%= user.name %> </span>
+                <span class="text-secondary fs-sm fw-6 ff-poppins"> {{ auth.use('web').user.name }} </span>
                 <span class="text-tertiary fs-xs fw-5 ff-poppins">Online</span>
             </div>
             <div class="avatar">
@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="nav-item" data-nav-item="provedores">
-                <a href="/provedores">
+                <a href="/isps">
                     <i class="material-icons-two-tone">public</i> Provedores
                 </a>
             </li>

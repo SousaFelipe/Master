@@ -2,14 +2,12 @@
 
 
 let statusAlert = null
-let loginButton = null
 
 
 
 $(function () {
 
     statusAlert = new Alert('statusLoginAlert', 5)
-    loginButton = window.APP.component('button', 'btnLogin')
 
 })
 
@@ -24,16 +22,16 @@ let login = function () {
 
     if (credentials) {
         new Request('login', credentials).post(response => {
-            const data = response.data
+            const errors = response.errors
 
-            if (data.errors) {
-                if (data.errors.email) {
+            if (errors) {
+                if (errors.email) {
                     window.APP.component('input', 'inputEmail').invalidate()
-                    statusAlert.display(data.errors.email)
+                    statusAlert.display(errors.email)
                 }
-                else if (data.errors.password) {
+                else if (errors.password) {
                     window.APP.component('input', 'inputPassword').invalidate()
-                    statusAlert.display(data.errors.password)
+                    statusAlert.display(errors.password)
                 }
             }
             else new Request('/dashboard').redirect(true)

@@ -22,12 +22,17 @@
         "@adonisjs/core",
         "@adonisjs/lucid",
         "@adonisjs/auth",
-        "@adonisjs/view"
+        "@adonisjs/view",
+        "@adonisjs/session"
     ],
     "aceProviders": [
         "@adonisjs/repl"
     ],
     "metaFiles": [
+        {
+            "pattern": "public/**",
+            "reloadServer": false
+        },
         {
             "pattern": "app/Views/**/*.edge",
             "reloadServer": false
@@ -37,7 +42,7 @@
         "httpControllers": "App/Controllers"
     },
     "directories": {
-        "public": "public",
+        "public": "./public",
         "views": "./app/Views"
     }
 }

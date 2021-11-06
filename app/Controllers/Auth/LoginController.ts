@@ -22,23 +22,22 @@ export default class LoginController {
         const user = await User.findBy('email', email)
 
         if ( ! user) {
-            return {
-                error: 'email',
-                message: langConfig.auth.email
-            }
+            return { errors: {
+                email: langConfig.auth.email
+            }}
         }
 
         try {
 
-            if (! (await Hash.verify(user.password, password))) {
-                return {
-                    error: 'password',
-                    message: langConfig.auth.password
-                }
+            if ( ! (await Hash.verify(user.password, password))) {
+                return { errors: {
+                    email: langConfig.auth.password
+                }}
             }
 
             await auth.use('web').attempt(email, password)
-            return { error: false }
+
+            return { errors: false }
         }
         catch {
             return response.badRequest('Invalid credentials')

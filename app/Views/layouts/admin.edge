@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 
-
-    @include('partials/head')
-
+    <head>
+        @include('partials/head')
+        @!section('styles')
+    </head>
 
     <body>
+
+        @!section('alerts')
 
         @include('partials/header')
 
