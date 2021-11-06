@@ -25,7 +25,7 @@ export default class Isps extends BaseSchema {
             table.enum('status', ['P', 'A', 'B', 'C']).defaultTo('P')
             table.string('server_host', 32).unique()
             table.string('server_ip', 15).unique()
-            table.string('token', 128).unique()
+            table.string('token', 192).unique()
             table.timestamps(true)
         })
     }

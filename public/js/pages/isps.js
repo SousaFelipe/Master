@@ -61,8 +61,6 @@ function requestProvedores () {
         .get(async response => {
             const isps = await response.isps
 
-            console.log(isps)
-
             isps.forEach(provedor => {
                 drawProvedor(provedor)
             })
@@ -107,12 +105,10 @@ function sendNewProvedor () {
         })
 
     if (data) {
-        new Request('/api/provedores/inserir', { provedor: data })
-            .put(async response => {
-                const data = await response.data
-
-                if (data.inserido) {
-                    drawProvedor(data.provedor)
+        new Request('/isps/store', { isp: data })
+            .post(response => {
+                if (response.inserido) {
+                    drawProvedor(response.isp)
                     new Modal('new-provedor-modal').close(() => { $('.input-provedor').val('') })
                     new Alert('new-provedor-alert', 5).success('Registro inserido com sucesso!')
                 }
@@ -129,9 +125,9 @@ function sendNewProvedor () {
 
 
 function requestNewToken () {
-    new Request('/api/v1/isp/token')
+    new Request('/tokens/create')
         .get(async response => {
-            const token = await response.data.token
+            const token = await response.token
             $('input[name="token"]').val(token)
         })
 }
@@ -158,23 +154,24 @@ function openTokenModal () {
 
 function openProvedorDetalhes (id, fantasia) {
 
-    new Request(`/api/provedores/buscar`, { id: id })
+    new Request(`/isps/${ id }/show`)
         .get(async response => {
-            const provedor = await response.data.provedor
+            const isp = await response.isp
 
-            $('#edit-cnpj').val( text(provedor.cnpj).cnpj() )
-            $('#edit-razao').val( provedor.razao )
-            $('#edit-nome_fantasia').val( provedor.nome_fantasia )
-            $('#edit-email').val( provedor.email )
-            $('#edit-empresa_telefone').val( text(provedor.empresa_telefone).cell() )
-            $('#edit-titular').val( provedor.titular )
-            $('#edit-titular_contato').val( text(provedor.titular_contato).cell() )
-            $('#edit-logradouro').val( provedor.logradouro )
-            $('#edit-municipio').val( provedor.municipio )
-            $('#edit-cep').val( text(provedor.cep).cep() )
-            $('#edit-server_url').val( provedor.server_url )
-            $('#edit-server_ip').val( provedor.server_ip )
-            $('#edit-token').val( provedor.token )
+            $('#edit-cnpj').val( text(isp.cnpj).cnpj() )
+            $('#edit-razao').val( isp.razao )
+            $('#edit-nome_fantasia').val( isp.nome_fantasia )
+            $('#edit-email').val( isp.email )
+            $('#edit-empresa_telefone').val( text(isp.empresa_telefone).cell() )
+            $('#edit-titular').val( isp.titular )
+            $('#edit-titular_contato').val( text(isp.titular_contato).cell() )
+            $('#edit-logradouro').val( isp.logradouro )
+            $('#edit-municipio').val( isp.municipio )
+            $('#edit-cep').val( text(isp.cep).cep() )
+            $('#edit-server_url').val( isp.server_url )
+            $('#edit-server_ip').val( isp.server_ip )
+            $('#edit-token').val( isp.token )
+
         })
 
     hidden().show()
