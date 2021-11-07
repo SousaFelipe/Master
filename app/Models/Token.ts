@@ -24,7 +24,9 @@ export default class Token extends BaseModel {
     @column()
     public tipo_vencimento: string
 
-    @column.dateTime({ autoCreate: false, autoUpdate: false })
+    @column.date({
+        serialize: value => value.toFormat('dd MM yyyy')
+    })
     public data_vencimento: DateTime
 
     @column()

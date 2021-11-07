@@ -338,7 +338,8 @@
     text-overflow:      ellipsis;
 }
 
-.form-control:disabled {
+.form-control:disabled,
+.form-control[readonly] {
     color:              var(--text-tertiary);
     background-color:   var(--lsp-secondary);
     border:             none;
@@ -545,7 +546,7 @@ select.form-control-md {
     display:            flex;
     justify-content:    center;
     align-items:        center;
-    padding:            0;   
+    padding:            0;
 }
 
 .widget-sm {

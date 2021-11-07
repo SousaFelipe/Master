@@ -1,9 +1,9 @@
-<div id="new-provedor-modal" class="modal-content">
+<div id="new-isp-modal" class="modal-content">
     <div class="modal modal-lg">
 
         <header class="modal-header">
             <h3 class="modal-title">Novo Provedor</h3>
-            <button type="button" data-modal-close="new-provedor-modal">
+            <button type="button" data-modal-close="new-isp-modal">
                 <i class="material-icons">close</i>
             </button>
         </header>
@@ -14,19 +14,19 @@
 
             <div class="row mt-3">
                 <div class="col-3">
-                    <input type="text" name="cnpj" class="form-control input-provedor mask_cnpj" placeholder="CNPJ" data-filter="mask|empty">
+                    <input type="text" name="cnpj" class="form-control input-isp mask_cnpj" placeholder="CNPJ" data-filter="mask|empty">
                 </div>
                 <div class="col-5">
-                    <input type="text" name="razao" class="form-control input-provedor" placeholder="Razão Social" data-filter="empty">
+                    <input type="text" name="razao" class="form-control input-isp" placeholder="Razão Social" data-filter="empty">
                 </div>
                 <div class="col-4">
-                    <input type="text" name="nome_fantasia" class="form-control input-provedor" placeholder="Fantasia" data-filter="empty">
+                    <input type="text" name="nome_fantasia" class="form-control input-isp" placeholder="Fantasia" data-filter="empty">
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-4">
-                    <select name="porte" class="form-control input-provedor select" data-filter="empty">
+                    <select name="porte" class="form-control input-isp select" data-filter="empty">
                         <option value="">Porte</option>
                         <option value="Individual">Individual</option>
                         <option value="Microempresa">Microempresa</option>
@@ -36,19 +36,19 @@
                     </select>
                 </div>
                 <div class="col-5">
-                    <input type="text" name="email" class="form-control input-provedor" placeholder="E-mail" data-filter="empty">
+                    <input type="text" name="email" class="form-control input-isp" placeholder="E-mail" data-filter="empty">
                 </div>
                 <div class="col-3">
-                    <input type="text" name="empresa_telefone" class="form-control input-provedor mask_telefone" placeholder="Telefone da empresa" data-filter="mask|empty">
+                    <input type="text" name="empresa_telefone" class="form-control input-isp mask_telefone" placeholder="Telefone da empresa" data-filter="mask|empty">
                 </div>
             </div>
 
             <div class="row mt-3 mb-4">
                 <div class="col-5">
-                    <input type="text" name="titular" class="form-control input-provedor" placeholder="Nome do responsável" data-filter="empty">
+                    <input type="text" name="titular" class="form-control input-isp" placeholder="Nome do responsável" data-filter="empty">
                 </div>
                 <div class="col-4">
-                    <select name="class_responsavel" class="form-control input-provedor select" data-filter="empty">
+                    <select name="class_responsavel" class="form-control input-isp select" data-filter="empty">
                         <option value="">Classificação</option>
                         <option value="Individual">Titular</option>
                         <option value="Pequeno Porte">Sócio-administrador</option>
@@ -56,7 +56,7 @@
                     </select>
                 </div>
                 <div class="col-3">
-                    <input type="text" name="titular_contato" class="form-control input-provedor mask_telefone" placeholder="Contato do responsável" data-filter="mask|empty">
+                    <input type="text" name="titular_contato" class="form-control input-isp mask_telefone" placeholder="Contato do responsável" data-filter="mask|empty">
                 </div>
             </div>
 
@@ -64,16 +64,16 @@
 
             <div class="row mt-3 mb-4">
                 <div class="col-5">
-                    <input type="text" name="logradouro" class="form-control input-provedor" placeholder="Ex: Bairro, rua e número" data-filter="empty">
+                    <input type="text" name="logradouro" class="form-control input-isp" placeholder="Ex: Bairro, rua e número" data-filter="empty">
                 </div>
                 <div class="col-3">
-                    <input type="text" name="municipio" class="form-control input-provedor" placeholder="Município" data-filter="empty">
+                    <input type="text" name="municipio" class="form-control input-isp" placeholder="Município" data-filter="empty">
                 </div>
                 <div class="col-2">
-                    <input type="text" name="cep" class="form-control input-provedor mask_cep" placeholder="CEP" data-filter="mask|empty">
+                    <input type="text" name="cep" class="form-control input-isp mask_cep" placeholder="CEP" data-filter="mask|empty">
                 </div>
                 <div class="col-2">
-                    <select name="uf" class="form-control input-provedor select" data-filter="empty">
+                    <select name="uf" class="form-control input-isp select" data-filter="empty">
                         <option value="">UF</option>
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
@@ -110,14 +110,14 @@
 
             <div class="row mt-3">
                 <div class="col-3">
-                    <input type="text" name="server_url" class="form-control input-provedor" placeholder="Domínio" data-filter="empty">
+                    <input type="text" name="server_host" class="form-control input-isp" placeholder="Domínio" data-filter="empty">
                 </div>
                 <div class="col-3">
-                    <input type="text" name="server_ip" class="form-control input-provedor mask_ip" placeholder="IP" data-filter="empty|max:15">
+                    <input type="text" name="server_ip" class="form-control input-isp mask_ip" placeholder="IP" data-filter="empty|max:15">
                 </div>
                 <div class="col-6">
                     <div class="flex-row">
-                        <input type="text" name="token" class="form-control input-provedor" placeholder="Token" data-filter="empty|min:62|max:62" disabled>
+                        <input type="text" name="token" class="form-control input-isp" placeholder="Token" data-filter="empty|min:62|max:62" disabled>
                         <button type="button" class="btn md bg-blue-two ms-1" onclick="requestNewToken()">
                             <i class="material-icons fs-16">refresh</i>
                         </button>
@@ -128,7 +128,7 @@
         </div>
 
         <footer class="modal-footer">
-            <button type="button" class="btn md bg-default" data-modal-close="new-provedor-modal">Cancelar</button>
+            <button type="button" class="btn md bg-default" data-modal-close="new-isp-modal">Cancelar</button>
             <button type="button" class="btn md bg-blue-one ms-1" onclick="sendNewProvedor()">Salvar</button>
         </footer>
 

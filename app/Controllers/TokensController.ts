@@ -1,8 +1,6 @@
-import { DateTime } from 'luxon'
-
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-import Hash from '@ioc:Adonis/Core/Hash'
+import Token from 'App/Models/Token'
 
 
 
@@ -15,31 +13,57 @@ export default class TokensController {
     }
 
 
-    public async list ({ auth } : HttpContextContract) {
-        //await auth.use('web').authenticate()
+    public async list ({ auth, request } : HttpContextContract) {
+        await auth.use('web').authenticate()
+
+        let tokens = await Token
+            .query()
+            .where('id_isp', request.param('id_isp'))
+            .select('*')
+
+        return { tokens }
     }
 
 
-    public async show (ctx : HttpContextContract) {
-        //await auth.use('web').authenticate()
+    public async show ({ auth, request } : HttpContextContract) {
+        await auth.use('web').authenticate()
+        let token = await Token.find(request.param('id'))
+        return { token }
     }
 
 
     public async create ({ auth } : HttpContextContract) {
         await auth.use('web').authenticate()
+        let token = new Token().create()
+        return { token }
+    }
 
-        const token = await Hash.make(DateTime.now().toString())
+
+    public async edit ({ auth, request } : HttpContextContract) {
+        await auth.use('web').authenticate()
+
+        let token = await Token
+            .query()
+            .where('id', request.param('id'))
+            .update(request.body())
 
         return { token }
     }
 
 
-    public async edit (ctx : HttpContextContract) {
-        //await auth.use('web').authenticate()
-    }
+    public async destroy ({ auth, request } : HttpContextContract) {
+        await auth.use('web').authenticate()
 
+        let id = request.param('id')
+        let token = await Token.findOrFail(id)
 
-    public async destroy (ctx : HttpContextContract) {
-        //await auth.use('web').authenticate()
+        await token.delete()
+
+        let deleted = await Token
+            .query()
+            .where('id', id)
+            .first()
+
+        return { deleted: (deleted == null) }
     }
 }

@@ -11,10 +11,10 @@
 
 
 @section('alerts')
-    <div class="alert-container" data-alert-container-to="new-provedor-alert">
-        <div id="new-provedor-alert" class="alert danger" role="alert">
-            <div id="new-provedor-alertBody" class="alert-body text-white"></div>
-            <button class="btn-close-widget" data-alert-close="new-provedor-alert">
+    <div class="alert-container" data-alert-container-to="new-isp-alert">
+        <div id="new-isp-alert" class="alert danger" role="alert">
+            <div id="new-isp-alertBody" class="alert-body text-white"></div>
+            <button class="btn-close-widget" data-alert-close="new-isp-alert">
                 <i class="material-icons-two-tone">close</i>
             </button>
         </div>
@@ -35,7 +35,7 @@
     <div class="main-content">
         <div class="card">
             <div class="card-body ms-4 mt-3 me-4 mb-4">
-                <table id="provedores">
+                <table id="isps">
                     <thead>
                         <tr>
                             <th>CNPJ</th>
@@ -58,7 +58,7 @@
                 <i class="material-icons-outlined">arrow_back</i>
             </button>
             <div class="flex-row">
-                <button type="button" class="btn widget bg-light me-1" data-isp-edit="0">
+                <button id="edit-isp" type="button" class="btn widget bg-light me-1" data-isp-edit="0" onclick="toggleEdit()">
                     <i class="material-icons md-18">edit</i>
                 </button>
                 <button type="button" class="btn widget bg-light" data-isp-edit="0">
@@ -74,19 +74,19 @@
 
             <div class="row mt-3">
                 <div class="col-3">
-                    <input type="text" id="edit-cnpj" name="cnpj" class="form-control edit-provedor" placeholder="CNPJ" data-filter="mask|empty" disabled>
+                    <input type="text" id="edit-cnpj" name="cnpj" class="form-control edit-isp" placeholder="CNPJ" data-filter="mask|empty">
                 </div>
                 <div class="col-5">
-                    <input type="text" id="edit-razao" name="razao" class="form-control edit-provedor" placeholder="Razão Social" data-filter="empty" disabled>
+                    <input type="text" id="edit-razao" name="razao" class="form-control edit-isp" placeholder="Razão Social" data-filter="empty">
                 </div>
                 <div class="col-4">
-                    <input type="text" id="edit-nome_fantasia" name="nome_fantasia" class="form-control edit-provedor" placeholder="Fantasia" data-filter="empty" disabled>
+                    <input type="text" id="edit-nome_fantasia" name="nome_fantasia" class="form-control edit-isp" placeholder="Fantasia" data-filter="empty">
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-4">
-                    <select name="porte" class="form-control edit-provedor select" data-filter="empty" disabled>
+                    <select id="edit-porte" name="porte" class="form-control edit-isp select" data-filter="empty">
                         <option value="">Porte</option>
                         <option value="Individual">Individual</option>
                         <option value="Microempresa">Microempresa</option>
@@ -96,19 +96,19 @@
                     </select>
                 </div>
                 <div class="col-5">
-                    <input type="text" id="edit-email" name="email" class="form-control edit-provedor" placeholder="E-mail" data-filter="empty" disabled>
+                    <input type="text" id="edit-email" name="email" class="form-control edit-isp" placeholder="E-mail" data-filter="empty">
                 </div>
                 <div class="col-3">
-                    <input type="text" id="edit-empresa_telefone" name="empresa_telefone" class="form-control edit-provedor" placeholder="Telefone da empresa" data-filter="mask|empty" disabled>
+                    <input type="text" id="edit-empresa_telefone" name="empresa_telefone" class="form-control edit-isp" placeholder="Telefone da empresa" data-filter="mask|empty">
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-5">
-                    <input type="text" id="edit-titular" name="titular" class="form-control edit-provedor" placeholder="Nome do responsável" data-filter="empty" disabled>
+                    <input type="text" id="edit-titular" name="titular" class="form-control edit-isp" placeholder="Nome do responsável" data-filter="empty">
                 </div>
                 <div class="col-4">
-                    <select name="class_responsavel" class="form-control edit-provedor select" data-filter="empty" disabled>
+                    <select id="edit-class_responsavel" name="class_responsavel" class="form-control edit-isp select" data-filter="empty">
                         <option value="">Classificação</option>
                         <option value="Individual">Titular</option>
                         <option value="Pequeno Porte">Sócio-administrador</option>
@@ -116,22 +116,22 @@
                     </select>
                 </div>
                 <div class="col-3">
-                    <input type="text" id="edit-titular_contato" name="titular_contato" class="form-control edit-provedor" placeholder="Contato do responsável" data-filter="mask|empty" disabled>
+                    <input type="text" id="edit-titular_contato" name="titular_contato" class="form-control edit-isp" placeholder="Contato do responsável" data-filter="mask|empty">
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-5">
-                    <input type="text" id="edit-logradouro" name="logradouro" class="form-control edit-provedor" placeholder="Ex: Bairro, rua e número" data-filter="empty" disabled>
+                    <input type="text" id="edit-logradouro" name="logradouro" class="form-control edit-isp" placeholder="Ex: Bairro, rua e número" data-filter="empty">
                 </div>
                 <div class="col-3">
-                    <input type="text" id="edit-municipio" name="municipio" class="form-control edit-provedor" placeholder="Município" data-filter="empty" disabled>
+                    <input type="text" id="edit-municipio" name="municipio" class="form-control edit-isp" placeholder="Município" data-filter="empty">
                 </div>
                 <div class="col-2">
-                    <input type="text" id="edit-cep" name="cep" class="form-control edit-provedor" placeholder="CEP" data-filter="mask|empty" disabled>
+                    <input type="text" id="edit-cep" name="cep" class="form-control edit-isp" placeholder="CEP" data-filter="mask|empty">
                 </div>
                 <div class="col-2">
-                    <select name="uf" class="form-control edit-provedor select" data-filter="empty" disabled>
+                    <select id="edit-uf" name="uf" class="form-control edit-isp select" data-filter="empty">
                         <option value="">UF</option>
                         <option value="AC">Acre</option>
                         <option value="AL">Alagoas</option>
@@ -166,14 +166,14 @@
 
             <div class="row mt-3">
                 <div class="col-3">
-                    <input type="text" id="edit-server_url" name="server_url" class="form-control edit-provedor" placeholder="Domínio" data-filter="empty" disabled>
+                    <input type="text" id="edit-server_host" name="server_host" class="form-control edit-isp" placeholder="Domínio" data-filter="empty">
                 </div>
                 <div class="col-3">
-                    <input type="text" id="edit-server_ip" name="server_ip" class="form-control edit-provedor" placeholder="IP" data-filter="empty|max:15" disabled>
+                    <input type="text" id="edit-server_ip" name="server_ip" class="form-control edit-isp" placeholder="IP" data-filter="empty|max:15">
                 </div>
                 <div class="col-6">
                     <div class="flex-row">
-                        <input type="text" id="edit-token" name="token" class="form-control edit-provedor" placeholder="Token" data-filter="empty|min:62|max:62" disabled>
+                        <input type="text" id="edit-token" name="token" class="form-control edit-isp" placeholder="Token" data-filter="empty|min:62|max:62">
                         <button type="button" class="btn md bg-blue-two ms-1" onclick="requestNewToken()">
                             <i class="material-icons fs-16">refresh</i>
                         </button>
@@ -183,8 +183,13 @@
 
         </div>
 
+        <div id="save-isp-buttons" class="flex-row justify-end w-100 mt-2 ps-5 pe-5" style="display: none;">
+            <button type="button" class="btn btn-sm bg-default me-1" onclick="disableEdit()">Cancelar</button>
+            <button type="button" class="btn btn-sm bg-white-one" onclick="sendNewToken()">Salvar</button>
+        </div>
+
         <div class="flex-col mt-5">
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-header">
                     <div class="flex-row justify-between align-center w-100">
                         <span class="text-tertiary fs-ml fw-6">Tokens</span>
@@ -230,6 +235,7 @@
 @section('layout-scripts')
     <script src="/js/http/Request.js"></script>
     <script src="/js/tools/filter.js"></script>
+    <script src="/js/tools/editable.js"></script>
     <script src="/js/layouts/admin.js"></script>
     <script src="/js/components/Alert.js"></script>
     <script src="/js/components/Modal.js"></script>

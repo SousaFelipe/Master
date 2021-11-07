@@ -38,7 +38,7 @@ Route.group(() => {
     Route.group(() => {
 
         Route.get('/', 'TokensController.index')
-        Route.get('/list', 'TokensController.list')
+        Route.get('/:id_isp/list', 'TokensController.list')
         Route.get('/:id/show', 'TokensController.show')
         Route.get('/create', 'TokensController.create')
         Route.put('/:id/edit', 'TokensController.edit')

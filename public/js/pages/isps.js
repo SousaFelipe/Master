@@ -3,6 +3,7 @@
 
 let ispsTable = null
 let tokensTable = null
+let enabledEdit = false
 
 
 
@@ -21,8 +22,8 @@ $.extend($.fn.dataTable.defaults, {
 })
 
 
-if ( ! $.fn.DataTable.isDataTable('#provedores')) {
-    ispsTable = $('#provedores').DataTable({
+if ( ! $.fn.DataTable.isDataTable('#isps')) {
+    ispsTable = $('#isps').DataTable({
         order: [[ 1, 'asc' ]],
         columnDefs: [
             { targets: [0, 1, 2], className: 'text-start' },
@@ -45,6 +46,9 @@ if ( ! $.fn.DataTable.isDataTable('#tokens')) {
 
 
 $(function () {
+
+    editable('*[id*="edit-"]', 'disabled')
+        .onStateChange(enabled => { enabledEdit = enabled })
 
     $('.mask_cnpj').mask('00.000.000/0000-00', { reverse: true })
     $('.mask_telefone').mask('(00) 0 0000-0000', { reverse: false })
@@ -89,14 +93,14 @@ function drawProvedor (provedor) {
 
 function openNewProvedorModal () {
     requestNewToken()
-    new Modal('new-provedor-modal').show()
+    new Modal('new-isp-modal').show()
 }
 
 
 
 function sendNewProvedor () {
 
-    const data = filter(`class*="input-provedor"`, (invalid) => {
+    const data = filter(`class*="input-isp"`, (invalid) => {
             invalid.addClass('is-invalid')
             invalid.keyup(function (e) {
                 e.preventDefault()
@@ -109,17 +113,62 @@ function sendNewProvedor () {
             .post(response => {
                 if (response.inserido) {
                     drawProvedor(response.isp)
-                    new Modal('new-provedor-modal').close(() => { $('.input-provedor').val('') })
-                    new Alert('new-provedor-alert', 5).success('Registro inserido com sucesso!')
+                    new Modal('new-isp-modal').close(() => { $('.input-isp').val('') })
+                    new Alert('new-isp-alert', 5).success('Registro inserido com sucesso!')
                 }
                 else {
-                    new Alert('new-provedor-alert', 5).danger('Erro ao inserir registro!')
+                    new Alert('new-isp-alert', 5).danger('Erro ao inserir registro!')
                 }
             })
     }
     else {
-        new Alert('new-provedor-alert', 5).warning('Preencha todos os campos destacados!')
+        new Alert('new-isp-alert', 5).warning('Preencha todos os campos destacados!')
     }
+}
+
+
+
+function openProvedorDetalhes (id, fantasia) {
+
+    new Request(`/isps/${ id }/show`)
+        .get(async response => {
+            const isp = await response.isp
+
+            $('#edit-cnpj').val( text(isp.cnpj).cnpj() )
+            $('#edit-razao').val( isp.razao )
+            $('#edit-nome_fantasia').val( isp.nome_fantasia )
+            $('#edit-email').val( isp.email )
+
+            $(`#edit-porte option`)
+                .removeAttr('selected')
+                .filter(`[value="${ isp.porte }"]`)
+                .attr('selected', true)
+
+            $('#edit-empresa_telefone').val( text(isp.empresa_telefone).cell() )
+            $('#edit-titular').val( isp.titular )
+            $('#edit-titular_contato').val( text(isp.titular_contato).cell() )
+
+            $(`#edit-class_responsavel option`)
+                .removeAttr('selected')
+                .filter(`[value="${ isp.class_responsavel }"]`)
+                .attr('selected', true)
+
+            $('#edit-logradouro').val( isp.logradouro )
+            $('#edit-municipio').val( isp.municipio )
+            $('#edit-cep').val( text(isp.cep).cep() )
+            $('#edit-server_host').val( isp.server_host )
+
+            $(`#edit-uf option`)
+                .removeAttr('selected')
+                .filter(`[value="${ isp.uf }"]`)
+                .attr('selected', true)
+
+            $('#edit-server_ip').val( isp.server_ip )
+            $('#edit-token').val( isp.token )
+
+        })
+
+    hidden().show()
 }
 
 
@@ -146,33 +195,39 @@ function drawToken (token) {
 
 
 
+function sendNewToken () {
+
+}
+
+
+
 function openTokenModal () {
     new Modal('new-token-modal').show()
 }
 
 
 
-function openProvedorDetalhes (id, fantasia) {
+function enableEdit () {
+    enabledEdit = true
+    $('#save-isp-buttons').fadeIn('fast')
+    $('*[id*="edit-"]').removeAttr('readonly')
+}
 
-    new Request(`/isps/${ id }/show`)
-        .get(async response => {
-            const isp = await response.isp
 
-            $('#edit-cnpj').val( text(isp.cnpj).cnpj() )
-            $('#edit-razao').val( isp.razao )
-            $('#edit-nome_fantasia').val( isp.nome_fantasia )
-            $('#edit-email').val( isp.email )
-            $('#edit-empresa_telefone').val( text(isp.empresa_telefone).cell() )
-            $('#edit-titular').val( isp.titular )
-            $('#edit-titular_contato').val( text(isp.titular_contato).cell() )
-            $('#edit-logradouro').val( isp.logradouro )
-            $('#edit-municipio').val( isp.municipio )
-            $('#edit-cep').val( text(isp.cep).cep() )
-            $('#edit-server_url').val( isp.server_url )
-            $('#edit-server_ip').val( isp.server_ip )
-            $('#edit-token').val( isp.token )
 
-        })
+function disableEdit () {
+    enabledEdit = false
+    $('#save-isp-buttons').fadeOut('fast')
+    $('*[id*="edit-"]').attr('readonly', 'readonly')
+}
 
-    hidden().show()
+
+
+function toggleEdit () {
+    if (enabledEdit) {
+        disableEdit()
+    }
+    else {
+        enableEdit()
+    }
 }
