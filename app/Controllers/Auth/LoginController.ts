@@ -10,12 +10,7 @@ import User from 'App/Models/User'
 export default class LoginController {
 
 
-    public async index ({ view } : HttpContextContract) {
-        return await view.render('auth/login')
-    }
-
-
-    public async login ({ auth, request, response } : HttpContextContract) {
+    public async login ({ auth, request } : HttpContextContract) {
 
         const email = request.input('email')
         const password = request.input('password')
@@ -35,12 +30,13 @@ export default class LoginController {
                 }}
             }
 
-            await auth.use('web').attempt(email, password)
-
-            return { errors: false }
+            const token = await auth.use('api').attempt(email, password)
+            return { errors: false, token }
         }
         catch {
-            return response.badRequest('Invalid credentials')
+            return { errors: {
+                crash: langConfig.auth.crash
+            }}
         }
     }
 
