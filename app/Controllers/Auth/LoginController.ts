@@ -3,7 +3,6 @@ import Hash from '@ioc:Adonis/Core/Hash'
 
 import langConfig from 'Config/lang'
 
-import ApiToken from 'App/Models/ApiToken'
 import User from 'App/Models/User'
 
 
@@ -53,10 +52,11 @@ export default class LoginController {
 
 
     public async logout ({ auth, response } : HttpContextContract) {
+        await auth.use('api').authenticate()
         await auth.use('api').revoke()
 
         return response.send({
-            revoked: true
+            revoked: ( ! auth.use('api').user)
         })
     }
 }
