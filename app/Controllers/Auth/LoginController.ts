@@ -3,6 +3,7 @@ import Hash from '@ioc:Adonis/Core/Hash'
 
 import langConfig from 'Config/lang'
 
+import ApiToken from 'App/Models/ApiToken'
 import User from 'App/Models/User'
 
 
@@ -10,40 +11,52 @@ import User from 'App/Models/User'
 export default class LoginController {
 
 
-    public async login ({ auth, request } : HttpContextContract) {
+    public async login ({ auth, request, response } : HttpContextContract) {
 
         const email = request.input('email')
         const password = request.input('password')
-        const user = await User.findBy('email', email)
-
-        if ( ! user) {
-            return { errors: {
-                email: langConfig.auth.email
-            }}
-        }
 
         try {
 
+            const user = await User.findBy('email', email)
+
+            if ( ! user) {
+                return response.send({ errors: {
+                    email: langConfig.auth.email
+                }})
+            }
+
             if ( ! (await Hash.verify(user.password, password))) {
-                return { errors: {
+                return response.send({ errors: {
                     email: langConfig.auth.password
-                }}
+                }})
             }
 
             const token = await auth.use('api').attempt(email, password)
-            return { errors: false, token }
+            return response.send({ errors: false, ...token })
         }
         catch {
-            return { errors: {
+            return response.send({ errors: {
                 crash: langConfig.auth.crash
-            }}
+            }})
         }
     }
 
 
-    public async logout ({ request, response } : HttpContextContract) {
+    public async auth ({ auth, response } : HttpContextContract) {
+        await auth.use('api').authenticate()
+
         return response.send({
-            method: request.intended()
+            user: auth.use('api').user
+        })
+    }
+
+
+    public async logout ({ auth, response } : HttpContextContract) {
+        await auth.use('api').revoke()
+
+        return response.send({
+            revoked: true
         })
     }
 }

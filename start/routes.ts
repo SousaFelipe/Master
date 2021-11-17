@@ -9,6 +9,7 @@ Route.get('/', 'AppController.home')
 Route.group(() => {
 
     Route.post('/login', 'LoginController.login').as('auth.login')
+    Route.post('/auth', 'LoginController.auth').as('auth.auth')
     Route.post('/logout', 'LoginController.logout').as('auth.logout')
 
 })
